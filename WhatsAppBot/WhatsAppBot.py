@@ -2123,7 +2123,7 @@ class WhatsAppBot:
 
         # just to load tkvideo for better experience and faster loading time later
         kebab_video = Label(self.__root)
-        kebab_player = tkvideo(r"KebabMenu.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "KebabMenu.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
     def __whatsappVersionDropDown(self):

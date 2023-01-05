@@ -8,7 +8,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.1'
+VERSION = '0.0.5'
 DESCRIPTION = 'A cross platform Python package to automate sending and receiving of WhatsApp messages using PyAutoGUI.'
 
 # Setting up
@@ -41,7 +41,7 @@ setup(
                                    'WhatsAppBot/whatsappPath.mp4', 'WhatsAppBot/whatsapp_desktop.jpeg', 'WhatsAppBot/whatsapp_microsoft.jpeg',
                                    'WhatsAppBot/whatsapp_web.jpeg', 'WhatsAppBot/whatsapp_web_move.mp4', 'WhatsAppBot/wt_icon_crt.png',
                                    'WhatsAppBot/wt_icon_crt2.png', 'WhatsAppBot/wt_icon_with_new_msg.PNG', 'WhatsAppBot/wt_icon_wrong.png',
-                                   'WhatsAppBot/wt_new_msg.mp4', 'WhatsAppBot/wt_no_new_msg.mp4'])],
+                                   'WhatsAppBot/wt_new_msg.mp4', 'WhatsAppBot/wt_no_new_msg.mp4', 'WhatsAppBot/__init__.py', 'WhatsAppBot/WhatsAppBot.py'])],
     install_requires=['pyautogui', 'scipy', 'pyperclip', 'numpy', 'pynput', 'tkvideo', 'Pillow'],
     extras_require={
         'win32': 'pywin32'
