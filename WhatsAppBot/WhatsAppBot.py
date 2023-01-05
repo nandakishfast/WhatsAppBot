@@ -10,6 +10,7 @@ import re
 import copy
 import random
 import numpy as np
+import pkg_resources
 
 if sys.platform == 'win32':
     from io import BytesIO
@@ -31,6 +32,7 @@ import webbrowser
 class WhatsAppBot:
 
     def __init__(self, setup_name):
+        self.__DATA_PATH = pkg_resources.resource_filename('WhatsAppBot', '/')
         self.__setupDBSchema()
         # this is a reserved keyword
         # will be called by user in constructor to create a new setup
@@ -245,7 +247,8 @@ class WhatsAppBot:
         self.__conn.commit()
 
     def __setupDBSchema(self):
-        self.__conn = sqlite3.connect('chat.sqlite')
+        file = self.__DATA_PATH + 'chat.sqlite'
+        self.__conn = sqlite3.connect(file)
         self.__cur = self.__conn.cursor()
         self.__cur.executescript('''
         
@@ -1989,7 +1992,8 @@ class WhatsAppBot:
             'Aerial 10'), bg='white', fg='black').grid(row=4, column=0, columnspan=5)
 
         self.__instructions = 'This is a sample instruction'
-        instruction_image = Image.open(r'instructions.png')
+        file = self.__DATA_PATH + 'instructions.png'
+        instruction_image = Image.open(file)
         instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
         t = Label(self.__root, image=instruction_photo)
@@ -2009,7 +2013,8 @@ class WhatsAppBot:
         t3 = Label(self.__root, text='--->', fg='black', font=('Aerial', '10', 'bold'))
         t3.grid(row=8, column=1)
 
-        right_click_image = Image.open(r'right_click_icon.jpg')
+        file = self.__DATA_PATH + 'right_click_icon.jpg'
+        right_click_image = Image.open(file)
         right_click_image = right_click_image.resize((50, 45), Image.ANTIALIAS)
         right_click_photo = ImageTk.PhotoImage(right_click_image)
         t = Label(self.__root, image=right_click_photo)
@@ -2095,7 +2100,8 @@ class WhatsAppBot:
         self.__instructions = "Enter a name that is easy for you to remember.\nAll the configuration that you will " \
                               "do from now will be stored against this name.\nUse this name while creating an " \
                               "instance of WhatsAppBot from its constructor.\n wt_object = WhatsAppBot('setup_name')"
-        instruction_image = Image.open(r'instructions.png')
+        file = self.__DATA_PATH + 'instructions.png'
+        instruction_image = Image.open(file)
         instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
         t = Label(self.__root, image=instruction_photo)
@@ -2181,7 +2187,8 @@ class WhatsAppBot:
         drop.grid(row=1, column=0, columnspan=2)
         drop.config(font=helv36)
 
-        web_image = Image.open(r'whatsapp_web.jpeg')
+        file = self.__DATA_PATH + 'whatsapp_web.jpeg'
+        web_image = Image.open(file)
         web_image = web_image.resize(
             (260, 150), Image.ANTIALIAS)
         web_photo = ImageTk.PhotoImage(web_image)
@@ -2191,7 +2198,8 @@ class WhatsAppBot:
         Label(self.__root, text='Whatsapp Web(Ubuntu also)', fg='black', font=('Aerial', '10', 'bold')).grid(row=3,
                                                                                                              column=0)
 
-        wat_desktop_image = Image.open(r'whatsapp_desktop.jpeg')
+        file = self.__DATA_PATH + 'whatsapp_desktop.jpeg'
+        wat_desktop_image = Image.open(file)
         wat_desktop_image = wat_desktop_image.resize(
             (260, 150), Image.ANTIALIAS)
         wat_desktop_photo = ImageTk.PhotoImage(wat_desktop_image)
@@ -2201,7 +2209,8 @@ class WhatsAppBot:
         Label(self.__root, text='Whatsapp Desktop Windows', fg='black', font=('Aerial', '10', 'bold')).grid(row=3,
                                                                                                             column=1)
 
-        wat_desktop_microsoft_image = Image.open(r'whatsapp_microsoft.jpeg')
+        file = self.__DATA_PATH + 'whatsapp_microsoft.jpeg'
+        wat_desktop_microsoft_image = Image.open(file)
         wat_desktop_microsoft_image = wat_desktop_microsoft_image.resize(
             (260, 150), Image.ANTIALIAS)
         wat_desktop_microsoft_photo = ImageTk.PhotoImage(wat_desktop_microsoft_image)
@@ -2211,7 +2220,7 @@ class WhatsAppBot:
         Label(self.__root, text='Whatsapp Desktop(Microsoft Store)', fg='black', font=('Aerial', '10', 'bold')).grid(
             row=5, column=0)
 
-        mac_image = Image.open(r'apple.jpg')
+        mac_image = Image.open(self.__DATA_PATH + 'apple.jpg')
         mac_image = mac_image.resize(
             (150, 150), Image.ANTIALIAS)
         mac_photo = ImageTk.PhotoImage(mac_image)
@@ -2248,7 +2257,7 @@ class WhatsAppBot:
                               "co-ordinates being displayed in green in the setup.\nDon’t accidentally right-click " \
                               "anywhere else. If so, right-click on kebab menu again.\nAfter right " \
                               "clicking, you are good to go, left-click next. "
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize(
             (192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
@@ -2260,7 +2269,7 @@ class WhatsAppBot:
         please_wait = Label(self.__root, text="Please wait...      loading ...", bg='light blue', font='Aerial 10')
         please_wait.grid(row=2, column=0)
         kebab_video = Label(self.__root)
-        kebab_player = tkvideo(r"KebabMenu.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "KebabMenu.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
         kebab_video.grid(row=2, column=0)
 
@@ -2289,7 +2298,7 @@ class WhatsAppBot:
                               'co-ordinates are displayed in green.\nNOTE: Right-click won’t open the contact info. ' \
                               'It is only for co-ordinates.\nDon’t accidentally right-click anywhere else. If so, ' \
                               'you can right-click again on “Contact Info” option again.\nLeft-click next. '
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize(
             (192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
@@ -2307,7 +2316,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"ContactInfo.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "ContactInfo.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -2332,7 +2341,7 @@ class WhatsAppBot:
 
         self.__instructions = 'Open Contact Info (Left-click on the “Contact Info” to open it).\nRight-click on the ' \
                               'middle of the contact name to get the co-ordinates.\nClick next. '
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize(
             (192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
@@ -2350,7 +2359,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"ContactInfoField1.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "ContactInfoField1.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -2382,7 +2391,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        field2_image = Image.open(r'field2.png')
+        field2_image = Image.open(self.__DATA_PATH + 'field2.png')
         field2_image = field2_image.resize((240, 350), Image.ANTIALIAS)
         field2_photo = ImageTk.PhotoImage(field2_image)
         t = Label(self.__root, image=field2_photo)
@@ -2415,7 +2424,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        field2group_image = Image.open(r'field2group.png')
+        field2group_image = Image.open(self.__DATA_PATH + 'field2group.png')
         field2group_image = field2group_image.resize(
             (240, 350), Image.ANTIALIAS)
         field2group_photo = ImageTk.PhotoImage(field2group_image)
@@ -2449,7 +2458,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        close_image = Image.open(r'close_contact.jpg')
+        close_image = Image.open(self.__DATA_PATH + 'close_contact.jpg')
         close_image = close_image.resize((240, 350), Image.ANTIALIAS)
         close_photo = ImageTk.PhotoImage(close_image)
         t = Label(self.__root, image=close_photo)
@@ -2578,7 +2587,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        topleft_image = Image.open(r'topleft.png')
+        topleft_image = Image.open(self.__DATA_PATH + 'topleft.png')
         topleft_image = topleft_image.resize((640, 360), Image.ANTIALIAS)
         topleft_photo = ImageTk.PhotoImage(topleft_image)
         t = Label(self.__root, image=topleft_photo)
@@ -2610,7 +2619,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        bottomleft_image = Image.open(r'bottomleft.png')
+        bottomleft_image = Image.open(self.__DATA_PATH + 'bottomleft.png')
         bottomleft_image = bottomleft_image.resize((640, 360), Image.ANTIALIAS)
         bottomleft_photo = ImageTk.PhotoImage(bottomleft_image)
         t = Label(self.__root, image=bottomleft_photo)
@@ -2642,7 +2651,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        type_msg_image = Image.open(r'type_message.png')
+        type_msg_image = Image.open(self.__DATA_PATH + 'type_message.png')
         type_msg_image = type_msg_image.resize((640, 360), Image.ANTIALIAS)
         type_msg_photo = ImageTk.PhotoImage(type_msg_image)
         t = Label(self.__root, image=type_msg_photo)
@@ -2674,7 +2683,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        send_msg_image = Image.open(r'send_message.png')
+        send_msg_image = Image.open(self.__DATA_PATH + 'send_message.png')
         send_msg_image = send_msg_image.resize((640, 360), Image.ANTIALIAS)
         send_msg_photo = ImageTk.PhotoImage(send_msg_image)
         t = Label(self.__root, image=send_msg_photo)
@@ -2710,7 +2719,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"SendImage.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "SendImage.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -2744,7 +2753,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"SearchBar.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "SearchBar.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         if self.__version == 'Whatsapp Desktop Windows from Microsoft Store':
@@ -2786,27 +2795,27 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0, columnspan=2)
 
-        unread_big_image = Image.open(r'unreadbig.png')
+        unread_big_image = Image.open(self.__DATA_PATH + 'unreadbig.png')
         unread_big_image = unread_big_image.resize((660, 360), Image.ANTIALIAS)
         unread_big_photo = ImageTk.PhotoImage(unread_big_image)
         t = Label(self.__root, image=unread_big_photo)
         t.grid(row=2, column=0, rowspan=3)
 
-        unread_crct_image = Image.open(r'unread_correct.png')
+        unread_crct_image = Image.open(self.__DATA_PATH + 'unread_correct.png')
         unread_crct_image = unread_crct_image.resize(
             (100, 100), Image.ANTIALIAS)
         unread_crct_photo = ImageTk.PhotoImage(unread_crct_image)
         t = Label(self.__root, image=unread_crct_photo)
         t.grid(row=2, column=1)
 
-        unread_wrong1_image = Image.open(r'unread_wrong1.png')
+        unread_wrong1_image = Image.open(self.__DATA_PATH + 'unread_wrong1.png')
         unread_wrong1_image = unread_wrong1_image.resize(
             (100, 100), Image.ANTIALIAS)
         unread_wrong1_photo = ImageTk.PhotoImage(unread_wrong1_image)
         t = Label(self.__root, image=unread_wrong1_photo)
         t.grid(row=3, column=1)
 
-        unread_wrong2_image = Image.open(r'unread_wrong2.png')
+        unread_wrong2_image = Image.open(self.__DATA_PATH + 'unread_wrong2.png')
         unread_wrong2_image = unread_wrong2_image.resize(
             (100, 100), Image.ANTIALIAS)
         unread_wrong2_photo = ImageTk.PhotoImage(unread_wrong2_image)
@@ -2877,7 +2886,7 @@ class WhatsAppBot:
                               "filter.\nNote: The setup application should not be over the unread chat filter.\nThen " \
                               "click on the 'Get Color' button.\nMost likely you will green color on the setup " \
                               "field.\nMake a note of the RGB values.\nClick Next."
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
         t = Label(self.__root, image=instruction_photo)
@@ -2895,7 +2904,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0, columnspan=3)
-        kebab_player = tkvideo(r"unread_cordinate_on.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "unread_cordinate_on.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -2960,7 +2969,7 @@ class WhatsAppBot:
                               "different.\nIf it is not different and of the same color, click on the 'Try Again' " \
                               "button.\nThis means that you have not properly taken the unread coordinates.\nIf it " \
                               "is different as expected, click Next. "
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
         t = Label(self.__root, image=instruction_photo)
@@ -2978,7 +2987,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0, columnspan=3)
-        kebab_player = tkvideo(r"unread_cordinate_off.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "unread_cordinate_off.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         button_to_unread = Button(self.__root, text='Try again (same color)', bg='red', fg='white',
@@ -3010,7 +3019,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"FirstChatUnread.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "FirstChatUnread.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         if self.__version == "Whatsapp Web":
@@ -3127,7 +3136,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"whatsappPath.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "whatsappPath.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -3172,7 +3181,7 @@ class WhatsAppBot:
                                       "this setup, make sure WhatsApp is in the left-most part.\nThen right click on " \
                                       "the outer most part of the red circle in WhatsApp icon in taskbar.\nClick Next."
 
-            instruction_image = Image.open(r'instructions.png')
+            instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
             instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
             instruction_photo = ImageTk.PhotoImage(instruction_image)
             t = Label(self.__root, image=instruction_photo)
@@ -3187,26 +3196,26 @@ class WhatsAppBot:
             kebab_video = Label(self.__root)
             kebab_video.grid(row=2, column=0, rowspan=3)
             if self.__version == 'Mac':
-                kebab_player = tkvideo(r"mac_whatsapp_squared.mp4", kebab_video, loop=1, size=(354, 360))
+                kebab_player = tkvideo(self.__DATA_PATH + "mac_whatsapp_squared.mp4", kebab_video, loop=1, size=(354, 360))
                 kebab_player.play()
 
             if self.__version == 'Whatsapp Desktop Windows':
-                kebab_player = tkvideo(r"MoveWhatsappIconToLeft.mp4", kebab_video, loop=1, size=(640, 360))
+                kebab_player = tkvideo(self.__DATA_PATH + "MoveWhatsappIconToLeft.mp4", kebab_video, loop=1, size=(640, 360))
                 kebab_player.play()
 
-            new_msg_wrong_image = Image.open(r'wt_icon_wrong.png')
+            new_msg_wrong_image = Image.open(self.__DATA_PATH + 'wt_icon_wrong.png')
             new_msg_wrong_image = new_msg_wrong_image.resize((114, 94), Image.ANTIALIAS)
             new_msg_wrong_photo = ImageTk.PhotoImage(new_msg_wrong_image)
             t = Label(self.__root, image=new_msg_wrong_photo)
             t.grid(row=2, column=1)
 
-            new_msg_correct_image = Image.open(r'wt_icon_crt2.png')
+            new_msg_correct_image = Image.open(self.__DATA_PATH + 'wt_icon_crt2.png')
             new_msg_correct_image = new_msg_correct_image.resize((114, 94), Image.ANTIALIAS)
             new_msg_correct_photo = ImageTk.PhotoImage(new_msg_correct_image)
             t = Label(self.__root, image=new_msg_correct_photo)
             t.grid(row=3, column=1)
 
-            new_msg_correct_image2 = Image.open(r'wt_icon_crt.png')
+            new_msg_correct_image2 = Image.open(self.__DATA_PATH + 'wt_icon_crt.png')
             new_msg_correct_image2 = new_msg_correct_image2.resize((114, 94), Image.ANTIALIAS)
             new_msg_correct_photo2 = ImageTk.PhotoImage(new_msg_correct_image2)
             t = Label(self.__root, image=new_msg_correct_photo2)
@@ -3231,7 +3240,7 @@ class WhatsAppBot:
             self.__root.grid_columnconfigure(0, weight=1)
 
             self.__instructions = "Move Chrome (or the brower in which WhatsApp Web is running) to left-most part as shown in video.\nWhenever you are running WhatsAppBot with this setup, make sure the browser is in the left-most part.\nThen right click on the brower to get its coordinates.\nClick Next. "
-            instruction_image = Image.open(r'instructions.png')
+            instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
             instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
             instruction_photo = ImageTk.PhotoImage(instruction_image)
             t = Label(self.__root, image=instruction_photo)
@@ -3245,7 +3254,7 @@ class WhatsAppBot:
 
             kebab_video = Label(self.__root)
             kebab_video.grid(row=2, column=0)
-            kebab_player = tkvideo(r"whatsapp_web_move.mp4", kebab_video, loop=1, size=(640, 360))
+            kebab_player = tkvideo(self.__DATA_PATH + "whatsapp_web_move.mp4", kebab_video, loop=1, size=(640, 360))
             kebab_player.play()
 
             next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -3306,7 +3315,7 @@ class WhatsAppBot:
                               "number of unread messages in the whatsapp icon.\nThen click on the 'Get Color' " \
                               "button.\nMost likely you will get red color on the setup field.\nMake a note of the " \
                               "RGB values.\nClick Next. "
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
         t = Label(self.__root, image=instruction_photo)
@@ -3324,7 +3333,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0, columnspan=3)
-        kebab_player = tkvideo(r"wt_new_msg.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "wt_new_msg.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -3390,7 +3399,7 @@ class WhatsAppBot:
                               "properly taken the WhatsApp icon coordinates.\nIf it is different as expected, " \
                               "click Next. "
 
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
         t = Label(self.__root, image=instruction_photo)
@@ -3408,7 +3417,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0, columnspan=3)
-        kebab_player = tkvideo(r"wt_no_new_msg.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "wt_no_new_msg.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         button_to_wt_cor = Button(self.__root, text='Try again (same color)', bg='red', fg='white',
@@ -3439,7 +3448,7 @@ class WhatsAppBot:
             self.__root, text='Right click over point', bg='red', fg='white', font=('Aerial', '10', 'bold'))
         self.__label_for_coordinates.grid(row=1, column=0)
 
-        minimize_image = Image.open(r'minimize.png')
+        minimize_image = Image.open(self.__DATA_PATH + 'minimize.png')
         minimize_image = minimize_image.resize((640, 360), Image.ANTIALIAS)
         minimize_photo = ImageTk.PhotoImage(minimize_image)
         t = Label(self.__root, image=minimize_photo)
@@ -3480,7 +3489,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"showDesktop.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "showDesktop.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -3636,7 +3645,7 @@ class WhatsAppBot:
                               "choose the time format of your WhatsApp.\nNote: The time in WhatsApp may be different " \
                               "that your system time.\nSo please check once and select.\nThe time in dropdown : Day " \
                               "- 18, Month - 05, Year - 2002. "
-        instruction_image = Image.open(r'instructions.png')
+        instruction_image = Image.open(self.__DATA_PATH + 'instructions.png')
         instruction_image = instruction_image.resize((192, 37), Image.ANTIALIAS)
         instruction_photo = ImageTk.PhotoImage(instruction_image)
         t = Label(self.__root, image=instruction_photo)
@@ -3687,7 +3696,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"DateTimeFormat.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "DateTimeFormat.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -3715,7 +3724,7 @@ class WhatsAppBot:
 
         kebab_video = Label(self.__root)
         kebab_video.grid(row=2, column=0)
-        kebab_player = tkvideo(r"username.mp4", kebab_video, loop=1, size=(640, 360))
+        kebab_player = tkvideo(self.__DATA_PATH + "username.mp4", kebab_video, loop=1, size=(640, 360))
         kebab_player.play()
 
         next_button = Button(self.__root, text='Next', bg='blue', fg='white', font=('Aerial', '10', 'bold'),
@@ -3747,7 +3756,7 @@ class WhatsAppBot:
               text="Create a new group with any name.\n\nYou can be the only member in the group too.\n\nMessages from this group won't be read by bot.\n\nSo it is recommended to make the group as \nonly admins can message (if there are participants).\n\nType the group name in the text box.",
               bg='white', fg='blue',
               font=('Aerial', '11', 'bold')).grid(row=1, column=0)
-        new_grp_image = Image.open(r'new_group.jpeg')
+        new_grp_image = Image.open(self.__DATA_PATH + 'new_group.jpeg')
         new_grp_image = new_grp_image.resize((265, 360), Image.ANTIALIAS)
         new_grp_photo = ImageTk.PhotoImage(new_grp_image)
         t = Label(self.__root, image=new_grp_photo)
@@ -3784,7 +3793,7 @@ class WhatsAppBot:
 
         self.__root.geometry('836x627')
 
-        original = Image.open(r'nanda.jpg')
+        original = Image.open(self.__DATA_PATH + 'nanda.jpg')
         resized = original.resize((836, 627), Image.ANTIALIAS)
         add_bg = ImageTk.PhotoImage(resized)  # Keep a reference, prevent GC
         Label(self.__root, image=add_bg).place(x=0, y=0)
@@ -3792,7 +3801,7 @@ class WhatsAppBot:
         Label(self.__root, text="Nanda Kishore B", bg='white', fg='red', font='Aerial 20 bold').grid(row=0, column=0,
                                                                                                      columnspan=4)
 
-        github_photo = Image.open(r'github.png')
+        github_photo = Image.open(self.__DATA_PATH + 'github.png')
         github_photo = github_photo.resize((50, 50), Image.ANTIALIAS)
         github_photo = ImageTk.PhotoImage(github_photo)
         git1 = Label(self.__root, image=github_photo)
@@ -3802,7 +3811,7 @@ class WhatsAppBot:
         git1.bind("<Button-1>", lambda e: self.__callback("https://github.com/nandakishfast"))
         git2.bind("<Button-1>", lambda e: self.__callback("https://github.com/nandakishfast"))
 
-        linked_in = Image.open(r'linkedin.png')
+        linked_in = Image.open(self.__DATA_PATH + 'linkedin.png')
         linked_in = linked_in.resize((50, 50), Image.ANTIALIAS)
         linked_in = ImageTk.PhotoImage(linked_in)
         link1 = Label(self.__root, image=linked_in)
@@ -3812,7 +3821,7 @@ class WhatsAppBot:
         link1.bind("<Button-1>", lambda e: self.__callback("https://www.linkedin.com/in/nanda-kishore-899848204/"))
         link2.bind("<Button-1>", lambda e: self.__callback("https://www.linkedin.com/in/nanda-kishore-899848204/"))
 
-        instagram = Image.open(r'instagram.png')
+        instagram = Image.open(self.__DATA_PATH + 'instagram.png')
         instagram = instagram.resize((50, 50), Image.ANTIALIAS)
         instagram = ImageTk.PhotoImage(instagram)
         insta1 = Label(self.__root, image=instagram)
@@ -3822,7 +3831,7 @@ class WhatsAppBot:
         insta1.bind("<Button-1>", lambda e: self.__callback("https://www.instagram.com/nanda_kishore_b7/"))
         insta2.bind("<Button-1>", lambda e: self.__callback("https://www.instagram.com/nanda_kishore_b7/"))
 
-        email = Image.open(r'gmail.png')
+        email = Image.open(self.__DATA_PATH + 'gmail.png')
         email = email.resize((50, 50), Image.ANTIALIAS)
         email = ImageTk.PhotoImage(email)
         Label(self.__root, image=email).grid(row=4, column=0, sticky='e')
@@ -3830,7 +3839,7 @@ class WhatsAppBot:
                                                                                                        sticky='w',
                                                                                                        columnspan=2)
 
-        phone = Image.open(r'phone.png')
+        phone = Image.open(self.__DATA_PATH + 'phone.png')
         phone = phone.resize((50, 50), Image.ANTIALIAS)
         phone = ImageTk.PhotoImage(phone)
         Label(self.__root, image=phone).grid(row=5, column=0, sticky='e')
@@ -3838,14 +3847,14 @@ class WhatsAppBot:
                                                                                                        sticky='w',
                                                                                                        columnspan=2)
 
-        arvind = Image.open(r'arvind.jpeg')
+        arvind = Image.open(self.__DATA_PATH + 'arvind.jpeg')
         arvind = arvind.resize((104, 150), Image.ANTIALIAS)
         arvind = ImageTk.PhotoImage(arvind)
         Label(self.__root, image=arvind).grid(row=6, column=1, sticky='sw')
         Label(self.__root, text="Arvind K", bg='white', fg='red', font='Aerial 15 bold').grid(row=7, column=1,
                                                                                               sticky='nw')
 
-        niresh = Image.open(r'niresh.jpeg')
+        niresh = Image.open(self.__DATA_PATH + 'niresh.jpeg')
         niresh = niresh.resize((108, 150), Image.ANTIALIAS)
         niresh = ImageTk.PhotoImage(niresh)
         Label(self.__root, image=niresh).grid(row=6, column=2, sticky='sw')
